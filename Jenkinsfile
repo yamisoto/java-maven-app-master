@@ -17,7 +17,6 @@ pipeline {
             steps {
                 script {
                     gv.buildJar()
-
                 }
             }
         }
@@ -31,19 +30,19 @@ pipeline {
         }
 
         stage("deploy") {
-            input{
-                message "select the environment of choice to deploy to "
+            input {
+                message "Select the environment of choice to deploy to"
                 ok "Done"
-                parameters{
-                    choice(name: `ENV`, choices:[`dev` , `staging`, `prod`] ,description:``)   
+                parameters {
+                    choice(name: 'ENV', choices: ['dev', 'staging', 'prod'], description: 'Choose the deployment environment')
                 }
             }
-                    steps {
+            steps {
                 script {
                     gv.deployApp()
-                    echo *Deploying to ${ENV}*
+                    echo "Deploying to ${ENV}"
                 }
             }
         }               
     }
-} 
+}
