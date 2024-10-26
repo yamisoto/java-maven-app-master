@@ -18,22 +18,19 @@ pipeline {
         stage("build jar") {
             steps {
                 script {
-                    #gv.buildJar()
+                    // gv.buildJar()
                     buildJar()
-
                 }
             }
         }
-
         stage("build image") {
             steps {
                 script {
-                    #gv.buildImage()
+                    // gv.buildImage()
                     buildImage 'vmcgtlx/demo-app:jma-22.2'
                 }
             }
         }
-
         stage("deploy") {
             steps {
                 script {
