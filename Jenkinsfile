@@ -1,5 +1,6 @@
 #!/user/bin/env groovy
-@Library('jenkins-shared-lib-1') _
+//@Library('jenkins-shared-lib-1') _
+jenkins-shared-lib-1.buildImage 'vmcgtlx/demo-app:jma-22.2'
 def gv
 
 pipeline {
