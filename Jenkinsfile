@@ -1,35 +1,44 @@
+#!/user/bin/env groovy
+@Library('jenkins-shared-library')
+def gv
+
 pipeline {
     agent any
-
+    tools {
+        maven 'Maven'
+    }
     stages {
-        stage('Build') {
-            when {
-                expression {
-                    return env.BRANCH_NAME == "jenkins-jobs"
+        stage("init") {
+            steps {
+                script {
+                    gv = load "script.groovy"
                 }
             }
+        }
+        stage("build jar") {
             steps {
-                echo 'BUILDING THE APPLICATION'
-                // Add build steps here, e.g., run build scripts, compile code, etc.
+                script {
+                    #gv.buildJar()
+                    buildJar()
+
+                }
             }
         }
 
-        stage('Test') {
+        stage("build image") {
             steps {
-                echo 'testing the application'
-                // Add test steps here, e.g., run unit tests, integration tests, etc.
+                script {
+                    #gv.buildImage()
+                    buildImage 'vmcgtlx/demo-app:jma-22.2'
+                }
             }
         }
 
-        stage('Deploy') {
-            when {
-                expression {
-                    return env.BRANCH_NAME == "starting-code"
-                }
-            }
+        stage("deploy") {
             steps {
-                echo 'deploying the application'
-                // Add deploy steps here, e.g., deploy to servers, run deploy scripts, etc.
+                script {
+                    gv.deployApp()
+                }
             }
         }
     }
